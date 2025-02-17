@@ -16,7 +16,7 @@
     <section id="lead-form">
         <h2>Submit Your Request</h2>
         <p>Fill in your details, and our team will connect you with a professional technician.</p>
-        <form action="https://formspree.io/f/meoerobo" method="POST">
+        <form id="leadForm">
             <input type="text" name="name" placeholder="Full Name" required>
             <input type="email" name="email" placeholder="Email Address" required>
             <input type="tel" name="phone" placeholder="Phone Number" required>
@@ -27,56 +27,84 @@
         </form>
     </section>
 
-<style>
-    body {
-        font-family: 'Arial', sans-serif;
-        text-align: center;
-        margin: 0;
-        padding: 0;
-        background: #f4f7f9;
-    }
-    header {
-        background: #007bff;
-        color: white;
-        padding: 30px;
-        font-size: 22px;
-    }
-    section {
-        margin: 30px auto;
-        padding: 25px;
-        width: 90%;
-        max-width: 500px;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-    input, textarea {
-        width: 100%;
-        padding: 14px;
-        margin: 10px 0;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        font-size: 16px;
-    }
-    textarea {
-        height: 120px;
-        resize: none;
-    }
-    button {
-        width: 100%;
-        background: #28a745;
-        color: white;
-        padding: 14px;
-        border: none;
-        cursor: pointer;
-        border-radius: 6px;
-        font-size: 18px;
-        transition: 0.3s ease;
-    }
-    button:hover {
-        background: #218838;
-    }
-</style>
+    <script>
+        document.getElementById("leadForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            var formData = new FormData(this);
+            var jsonData = {};
+            formData.forEach((value, key) => jsonData[key] = value);
+
+            fetch("https://script.google.com/macros/s/AKfycbyWSM43UWQ3KS2Qlw2_GvQ07NTRHdwNwRJOirHSu50dx4nHrJo-0pUAUHTk1uf0res9/exec", {
+                method: "POST",
+                body: JSON.stringify(jsonData),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(response => {
+                if (response.ok) {
+                    alert("Your request has been submitted!");
+                    document.getElementById("leadForm").reset();
+                } else {
+                    alert("Error submitting the form. Please try again.");
+                }
+            }).catch(error => {
+                console.error("Error:", error);
+                alert("Submission failed.");
+            });
+        });
+    </script>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: #f4f7f9;
+        }
+        header {
+            background: #007bff;
+            color: white;
+            padding: 30px;
+            font-size: 22px;
+        }
+        section {
+            margin: 30px auto;
+            padding: 25px;
+            width: 90%;
+            max-width: 500px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        input, textarea {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        textarea {
+            height: 120px;
+            resize: none;
+        }
+        button {
+            width: 100%;
+            background: #28a745;
+            color: white;
+            padding: 14px;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 18px;
+            transition: 0.3s ease;
+        }
+        button:hover {
+            background: #218838;
+        }
+    </style>
 
 </body>
 </html>
